@@ -1,6 +1,6 @@
 import React from "react";
 
-export function SearchInput({ onSearch }) {
+export function SearchInput({ onSearch, char, isSearch, value }) {
   return (
     <div>
       <label
@@ -33,6 +33,7 @@ export function SearchInput({ onSearch }) {
           className="block p-3 pl-10 w-full text-sm md:w-96 text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Search Notes..."
           onChange={onSearch}
+          value={value}
         />
         <button
           type="submit"
@@ -41,6 +42,15 @@ export function SearchInput({ onSearch }) {
           Search
         </button>
       </div>
+      {isSearch && (
+        <span
+          className={`${
+            char === 0 ? "text-red-color" : "text-secondary-color"
+          }`}
+        >
+          remaining character is {char}
+        </span>
+      )}
     </div>
   );
 }

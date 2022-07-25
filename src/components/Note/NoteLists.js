@@ -11,6 +11,8 @@ class NoteLists extends React.Component {
       data: [],
       dataSearch: [],
       isSearch: false,
+      maxLengthInput: 50,
+      inputValue: "",
     };
     this.onSave = this.onSave.bind(this);
     this.onDelete = this.onDelete.bind(this);
@@ -68,24 +70,36 @@ class NoteLists extends React.Component {
 
   onSearch = (e) => {
     const searchValue = e.target.value;
-    if (searchValue === "") {
+    const charLength = searchValue.length;
+    if (charLength <= 50) {
       this.setState((prevState) => {
         return {
           ...prevState,
-          isSearch: false,
+          inputValue: searchValue.slice(0, 50),
         };
       });
-    } else {
-      const newData = this.state.data.filter((item) => {
-        return item.title.toLowerCase().includes(searchValue.toLowerCase());
-      });
-      this.setState((prevState) => {
-        return {
-          ...prevState,
-          isSearch: true,
-          dataSearch: newData,
-        };
-      });
+
+      if (searchValue === "") {
+        this.setState((prevState) => {
+          return {
+            ...prevState,
+            isSearch: false,
+            maxLengthInput: 50,
+          };
+        });
+      } else {
+        const newData = this.state.data.filter((item) => {
+          return item.title.toLowerCase().includes(searchValue.toLowerCase());
+        });
+        this.setState((prevState) => {
+          return {
+            ...prevState,
+            isSearch: true,
+            dataSearch: newData,
+            maxLengthInput: 50 - charLength,
+          };
+        });
+      }
     }
   };
 
@@ -104,15 +118,21 @@ class NoteLists extends React.Component {
       <div className="w-full overflow-hidden px-5 md:px-10 lg:px-20 py-4 pl-20 md:pl-64 lg:pl-64">
         {this.props.type !== "archive" && (
           <div className="flex justify-between gap-3 mb-6">
-            <SearchInput onSearch={this.onSearch} />
-
-            <Button
-              icon={<AddIcon />}
-              title="Create"
-              className="bg-primary-color"
-              onClick={this.createNote}
-              mdHidden={true}
+            <SearchInput
+              onSearch={this.onSearch}
+              isSearch={this.state.isSearch}
+              char={this.state.maxLengthInput}
+              value={this.state.inputValue}
             />
+            <div>
+              <Button
+                icon={<AddIcon />}
+                title="Create"
+                className="bg-primary-color h-[46px] w-full"
+                onClick={this.createNote}
+                mdHidden={true}
+              />
+            </div>
           </div>
         )}
         <div className="note-container grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5 gap-4 ">
