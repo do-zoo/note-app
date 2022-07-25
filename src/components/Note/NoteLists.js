@@ -3,12 +3,13 @@ import NoteCard from "./NoteCard";
 import Button from "../atoms/Button";
 import { AddIcon } from "../../assets/icon";
 import { SearchInput } from "../atoms/Input";
+import { getInitialData } from "../../utils";
 
 class NoteLists extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
+      data: getInitialData,
       dataSearch: [],
       isSearch: false,
       maxLengthInput: 50,
