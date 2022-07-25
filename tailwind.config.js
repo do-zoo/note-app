@@ -9,6 +9,7 @@ module.exports = {
         "secondary-color": "#ECB365",
         "tertiary-color": "#064663",
         "quaternary-color": "#DFF6FF",
+        "red-color": "#FF5252",
       },
     },
   },

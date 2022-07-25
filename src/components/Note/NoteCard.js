@@ -116,31 +116,34 @@ class NoteCard extends React.Component {
     const newData = this.props.data;
 
     return (
-      <div className="card bg-secondary-color rounded-xl text-base-color overflow-hidden w-full">
-        <CardHeader
-          isHeaderOpen={isHeaderOpen}
-          toggleHeader={this.toggleHeader}
-          isEdit={isEdit}
-          toggleEdit={this.toggleEdit}
-          onSave={this.onSave}
-          onDelete={this.onDelete}
-          onArchive={this.onArchive}
-          disabledSave={
-            this.props.data.isFresh && (inputTitle === "" || inputBody === "")
-          }
-          isArchived={this.props.data.archived}
-        />
-        <CardBody
-          isEdit={isEdit}
-          data={newData}
-          onInputTitle={this.onInputTitleChange}
-          onInputBody={this.onInputBodyChange}
-        />
-        <CardFooter
-          author={newData.author}
-          mode={isEdit ? "mode edit" : "mode baca"}
-          date={getDateFormat(newData.createdAt)}
-        />
+      <div className="note-card">
+        <div className="card bg-secondary-color rounded-xl text-base-color overflow-hidden w-full">
+          <CardHeader
+            isHeaderOpen={isHeaderOpen}
+            toggleHeader={this.toggleHeader}
+            isEdit={isEdit}
+            toggleEdit={this.toggleEdit}
+            onSave={this.onSave}
+            onDelete={this.onDelete}
+            onArchive={this.onArchive}
+            disabledSave={
+              this.props.data.isFresh && (inputTitle === "" || inputBody === "")
+            }
+            isArchived={this.props.data.archived}
+          />
+          <CardBody
+            isEdit={isEdit}
+            data={newData}
+            onInputTitle={this.onInputTitleChange}
+            onInputBody={this.onInputBodyChange}
+          />
+          <CardFooter
+            author={newData.author}
+            mode={isEdit ? "mode edit" : "mode baca"}
+            date={getDateFormat(newData.createdAt)}
+            isArchived={newData.archived}
+          />
+        </div>
       </div>
     );
   }
@@ -216,7 +219,7 @@ const CardHeader = ({
 
 const CardBody = ({ isEdit, data, onInputTitle, onInputBody }) => {
   return (
-    <div className="px-4 pb-4">
+    <div className="px-4 pb-4 ">
       <div className="note-title">
         {isEdit ? (
           <input
@@ -253,10 +256,17 @@ const CardBody = ({ isEdit, data, onInputTitle, onInputBody }) => {
   );
 };
 
-const CardFooter = ({ mode, date }) => {
+const CardFooter = ({ mode, date, isArchived }) => {
   return (
     <div className="flex items-center justify-between px-2 py-1 bg-tertiary-color text-quaternary-color font-light text-sm">
-      <p>{mode}</p>
+      <p>
+        {mode}
+        {isArchived ? (
+          <span className="text-red-color"> {"(Archived)"}</span>
+        ) : (
+          ""
+        )}
+      </p>
       <p>{date}</p>
     </div>
   );
