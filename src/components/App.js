@@ -7,7 +7,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       contentType: "unarchive",
-      isSideBarOpen: true,
+      isSideBarOpen: false,
     };
 
     this.onChangeContentType = this.onChangeContentType.bind(this);
