@@ -9,7 +9,7 @@ class NoteLists extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: getInitialData,
+      data: getInitialData(),
       dataSearch: [],
       isSearch: false,
       maxLengthInput: 50,
