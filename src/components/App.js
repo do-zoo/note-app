@@ -6,10 +6,12 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      contentType: "archive",
+      contentType: "unarchive",
+      isSideBarOpen: true,
     };
 
     this.onChangeContentType = this.onChangeContentType.bind(this);
+    this.onChangeSideBar = this.onChangeSideBar.bind(this);
   }
 
   onChangeContentType(type) {
@@ -18,13 +20,20 @@ class App extends React.Component {
     });
   }
 
+  onChangeSideBar() {
+    this.setState({
+      isSideBarOpen: !this.state.isSideBarOpen,
+    });
+  }
+
   render() {
     return (
       <div className="relative w-auto min-h-screen bg-base-color text-quaternary-color flex">
         <SideBar
-          className=" hidden md:block w-[300px]"
           onChangeContentType={this.onChangeContentType}
           type={this.state.contentType}
+          isSideBarOpen={this.state.isSideBarOpen}
+          onClickSideBar={this.onChangeSideBar}
         />
         <NoteLists type={this.state.contentType} />
       </div>
